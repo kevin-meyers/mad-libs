@@ -7,39 +7,40 @@ from collections import defaultdict
 
 
 class MadLibs:
-  
+
     def __init__(self, text, shuffle=True):
-        tags = self.get_tags(text)
+        self.text = text
+        self.tags = self.get_tags()
+        self.shuffle = shuffle
+        self.responses = defaultdict(lambda: [])
 
-        responses = defaultdict(lambda: [])
 
-        for tag in tags:
-            responses[tag].append(self.ask_pos(tag))
+    def run(self):
+        for tag in self.tags:
+            self.responses[tag].append(self.ask_pos(tag))
 
-        if shuffle:
-            for key in responses.keys():  # Maybe call key, pos
-                random.shuffle(responses[key])
+        if self.shuffle:
+            for key in self.responses.keys():  # Maybe call key, pos
+                random.shuffle(self.responses[key])
 
-        for tag in tags:
+        for tag in self.tags:
             tag_escaped = re.escape('[' + tag + ']')
-            word = responses[tag].pop()
+            word = self.responses[tag].pop()
 
-            text = re.sub(tag_escaped, word, text, count=1)
+            self.text = re.sub(tag_escaped, word, self.text, count=1)
 
-        print(text)
+        return self.text
 
 
-    @staticmethod
-    def get_tags(string):
-        return re.findall(r'(?<=\[).+?(?=\])', string)
+    def get_tags(self):
+        return re.findall(r'(?<=\[).+?(?=\])', self.text)
 
     @staticmethod
     def ask_pos(pos):  # Parts Of Speech
         return input(f'Enter a(n): {pos}\n')
 
-
-
 if __name__ == '__main__':
-    text = open('example.txt').read()
-    m = MadLibs(text)
-
+	text = open('example.txt').read()
+	m = MadLibs(text=text)
+	
+	m.run()
