@@ -16,21 +16,26 @@ class MadLibs:
 
 
     def run(self):
+		make_questions()
+		if shuffle:
+			randomize()
+		build_story()
+		return self.text
+
+	def make_questions(self):
         for tag in self.tags:
             self.responses[tag].append(self.ask_pos(tag))
 
-        if self.shuffle:
-            for key in self.responses.keys():  # Maybe call key, pos
+    def randomize(self):
+            for key in self.responses.keys():
                 random.shuffle(self.responses[key])
-
+	
+	def build_story(self):
         for tag in self.tags:
             tag_escaped = re.escape('[' + tag + ']')
             word = self.responses[tag].pop()
 
             self.text = re.sub(tag_escaped, word, self.text, count=1)
-
-        return self.text
-
 
     def get_tags(self):
         return re.findall(r'(?<=\[).+?(?=\])', self.text)
