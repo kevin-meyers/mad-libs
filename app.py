@@ -4,17 +4,20 @@ import mad_libs
 
 
 app = Flask(__name__)
-
+app.debug=True
 
 @app.route('/')  # This is where the user should select a default story or build one
-def home():
-	return render_template('home.html')
+def choice():
+	return render_template('choice.html')
 
-@app.route('/', methods=['POST'])
-def form_post():
-	text = request.form['text']
-	processed_text = text.upper()
-	return processed_text
+@app.route('/form')
+def form():
+	return render_template('form.html', questions=mad_libs.default_questions())
+
+@app.route('/form', methods=['POST'])
+def handle_data():
+	user_in = request.form.get('placeholder')
+	return user_in.upper()
 
 
 if __name__ == '__main__':

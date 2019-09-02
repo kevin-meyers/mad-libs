@@ -1,4 +1,17 @@
-<form method="POST">
+{% extends 'base.html' %}
 
-    <input name="text">
-    <input type="submit">
+{% block container %}
+	
+	<div class='form'>
+		{% for question in questions %}
+			<div class='box'>
+				<small>{{ question }}</small>
+					<input type='text' name='placeholder' method='POST'>
+				</div>
+		{% endfor %}
+		<form method='POST'>
+		<input type='submit'>
+
+	</div>
+
+{% endblock %}
