@@ -1,51 +1,29 @@
-import random
 import re
 
 from collections import defaultdict
+from random import shuffle
 
 
+def get_tags(text):
+	return re.findall(r'(?<=\[).+?(?=\])', text)
 
+def to_question(tag):
+	return f'Enter a(n): {tag}'
 
-class MadLibs:
+def make_questions(tags):
+	return [QUESTION_FORMAT(tag) for tag in tags]
 
-    def __init__(self, text, shuffle=True):
-        self.text = text
-        self.tags = self.get_tags()
-        self.shuffle = shuffle
-        self.responses = defaultdict(lambda: [])
+# Here is where you ask the users questions on the front end and record into a responses dict
 
+def randomize(responses):
+	[shuffle(responses[key]) for key in responses.keys()]
+	return responses
 
-    def run(self):
-		make_questions()
-		if shuffle:
-			randomize()
-		build_story()
-		return self.text
+def build_story(text, tags, responses):
+	for tag in tags:
+		tag_escaped = re.escape('[' + tag + ']')
+		word = responses[tag].pop()
 
-	def make_questions(self):
-        for tag in self.tags:
-            self.responses[tag].append(self.ask_pos(tag))
-
-    def randomize(self):
-            for key in self.responses.keys():
-                random.shuffle(self.responses[key])
+		text = re.sub(tag_escaped, word, text, count=1)
 	
-	def build_story(self):
-        for tag in self.tags:
-            tag_escaped = re.escape('[' + tag + ']')
-            word = self.responses[tag].pop()
-
-            self.text = re.sub(tag_escaped, word, self.text, count=1)
-
-    def get_tags(self):
-        return re.findall(r'(?<=\[).+?(?=\])', self.text)
-
-    @staticmethod
-    def ask_pos(pos):  # Parts Of Speech
-        return input(f'Enter a(n): {pos}\n')
-
-if __name__ == '__main__':
-	text = open('example.txt').read()
-	m = MadLibs(text=text)
-	
-	m.run()
+	return text

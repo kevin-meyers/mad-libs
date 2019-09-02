@@ -1,18 +1,14 @@
 from flask import Flask, render_template, flash, request
 
-
-from mad_libs import MadLibs
-
-
-m = MadLibs(open('example.txt').read())
+import mad_libs
 
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def form():
-	return render_template('form.html')
+@app.route('/')  # This is where the user should select a default story or build one
+def home():
+	return render_template('home.html')
 
 @app.route('/', methods=['POST'])
 def form_post():
