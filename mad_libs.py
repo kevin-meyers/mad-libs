@@ -14,8 +14,6 @@ def to_question(tag):
 def make_questions(tags):
 	return [(tag, to_question(tag)) for tag in tags]
 
-# Here is where you ask the users questions on the front end and record into a responses dict
-
 def randomize(responses):
 	[shuffle(responses[key]) for key in responses.keys()]
 	return responses
