@@ -11,7 +11,7 @@ def to_question(tag):
 	return f'Enter a(n): {tag}'
 
 def make_questions(tags):
-	return [to_question(tag) for tag in tags]
+	return [(tag, to_question(tag)) for tag in tags]
 
 # Here is where you ask the users questions on the front end and record into a responses dict
 
@@ -25,13 +25,10 @@ def build_story(text, tags, responses):
 		word = responses[tag].pop()
 
 		text = re.sub(tag_escaped, word, text, count=1)
-	
 	return text
 
 
-def default_questions():
-	text = open('data/example.txt').read()
-
+def default_questions(text):
 	tags = get_tags(text)
 	
 	return make_questions(tags)

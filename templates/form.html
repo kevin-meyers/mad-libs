@@ -1,15 +1,16 @@
+<!-- Thank you to Ben Lafferty for help on the form https://github.com/tempor1s --!>
+
 {% extends 'base.html' %}
 
 {% block container %}
 	
-	<div class='form'>
-		{% for question in questions %}
+	<form action='/story' method='POST'>
+		{% for tag, question in questions %}
 			<div class='box'>
 				<small>{{ question }}</small>
-					<input type='text' name='placeholder' method='POST'>
-				</div>
+				<input type='text' name='{{ tag }}' method='POST' required>
+			</div>
 		{% endfor %}
-		<form method='POST'>
 		<input type='submit'>
 
 	</div>
