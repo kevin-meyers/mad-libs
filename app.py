@@ -10,7 +10,7 @@ app.debug=True
 
 @app.route('/')  # This is where the user should select a default story or build one
 def choice():
-	return render_template('choice.html')
+	return render_template('user_input.html')
 
 @app.route('/input')  # Create the user_input.html with a text box for the user, send to /form
 def user_story():
@@ -21,7 +21,7 @@ def user_story():
 def form():
 	if request.method == 'POST':
 		global text
-		text = request.form.to_dict()
+		text = request.form.get('input')
 	global tags
 	tags = mad_libs.get_tags(text)
 	
