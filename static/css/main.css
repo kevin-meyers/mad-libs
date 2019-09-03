@@ -1,7 +1,14 @@
 body {
 	padding-top: 50px;
+	font-size: 25px;
 }
+p{
+	font-size:40px;
+	text-align:center;
+}
+
 .top-pad {
+	
 	padding: 40px 15px;
 	text-align: center;
 }

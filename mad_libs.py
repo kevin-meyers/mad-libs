@@ -25,10 +25,5 @@ def build_story(text, tags, responses):
 		word = responses[tag].pop()
 
 		text = re.sub(tag_escaped, word, text, count=1)
-	return text
+	return text.split('\n')
 
-
-def default_questions(text):
-	tags = get_tags(text)
-	
-	return make_questions(tags)
