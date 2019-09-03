@@ -2,8 +2,9 @@ from flask import Flask, render_template, flash, request
 
 import mad_libs
 
-text = open('data/example.txt').read()
+text = ''
 tags = []
+
 
 app = Flask(__name__)
 app.debug=True
@@ -19,12 +20,17 @@ def user_story():
 @app.route('/form')
 @app.route('/form', methods=['POST'])
 def form():
+	global text, tags
+
 	if request.method == 'POST':
-		global text
 		text = request.form.get('input')
-	global tags
+
+	else:
+		text = open('data/example.txt').read()
+
+
 	tags = mad_libs.get_tags(text)
-	
+	print(tags, text)
 	return render_template('form.html', questions=mad_libs.make_questions(tags))
 
 

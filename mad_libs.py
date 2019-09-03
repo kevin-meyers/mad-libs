@@ -5,7 +5,6 @@ from random import shuffle
 
 
 def get_tags(text):
-	print(text)
 	return re.findall(r'(?<=\[).+?(?=\])', text)
 
 def to_question(tag):
