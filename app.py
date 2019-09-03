@@ -22,6 +22,8 @@ def form():
 	if request.method == 'POST':
 		global text
 		text = request.form.get('input')
+		print(text)		
+
 	global tags
 	tags = mad_libs.get_tags(text)
 	
