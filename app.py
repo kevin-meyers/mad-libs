@@ -10,11 +10,11 @@ app.debug=True
 
 @app.route('/')  # This is where the user should select a default story or build one
 def choice():
-	return render_template('user_input.html')
+	return render_template('choice.html')
 
-@app.route('/input')  # Create the user_input.html with a text box for the user, send to /form
+@app.route('/input')
 def user_story():
-	return render_template('user_input.html')
+	return render_template('input.html')
 
 @app.route('/form')
 @app.route('/form', methods=['POST'])
